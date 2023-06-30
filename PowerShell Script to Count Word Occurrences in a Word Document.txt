@@ -1,0 +1,27 @@
+$wordFilePath = "C:\Path\to\Your\WordDocument.docx"
+$searchWord = "India"
+
+# Create a new Word application object
+$word = New-Object -ComObject Word.Application
+
+# Open the Word document
+$document = $word.Documents.Open($wordFilePath)
+
+# Perform the word count
+$wordCount = 0
+$find = $document.Content.Find
+$find.Text = $searchWord
+$find.MatchCase = $false
+$find.MatchWholeWord = $true
+while ($find.Execute()) {
+    $wordCount++
+}
+
+# Close the Word document
+$document.Close()
+
+# Quit the Word application
+$word.Quit()
+
+# Display the word count
+Write-Host "The word '$searchWord' appears $wordCount times in the document."
